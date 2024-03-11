@@ -15,11 +15,6 @@ function divide (a, b) {
     return a / b;
 };
 
-//Declare variables for calculator operations
-let firstNumber = '';
-let secondNumber = '';
-let operator = '';
-
 //This function performs a mathematical operation on two numbers.
 //It takes three arguments: an operator in the form of a string('+', '-', '*', '/'), and two numbers.
 //Based on the operator provided, it calls the appropriate mathematical function (add, subtract, multiply, divide).
@@ -43,19 +38,55 @@ function operate(operator, num1, num2) {
     }
 }
 
+//Declare variables for calculator operations
+let firstNumber = '';
+let secondNumber = '';
+let operator = '';
+
 //Declare variables for the calculator display
 let displayValue = '';
 
-//document.querySelectorAll('.digit') selects all the elements with the class digit, which are the digit buttons.
-//forEach is used to iterate over each button.
-//addEventListener('click', () => {...}) adds a click event listener to each button.When a button is clicked, the function inside the event listener is executed.
-//displayValue += button.textContent; appends the text content of the button(which is the digit) to displayValue.
-//document.getElementById('display').textContent = displayValue; updates the text content of the display with the new displayValue.
-const digitButtons = document.querySelectorAll('.digit');
+//Update the display function
+function updateDisplay() {
+    document.getElementById('display').textContent = secondNumber === '' ? firstNumber : secondNumber;
+}
 
+//Digit buttons
+const digitButtons = document.querySelectorAll('.digit');
 digitButtons.forEach(button => {
     button.addEventListener('click', () => {
-        displayValue += button.textContent;
-        document.getElementById('display').textContent = displayValue;
+        if (operator === '') {
+            firstNumber += button.textContent;
+        } else {
+            secondNumber += button.textContent;
+        }
+        updateDisplay();
     });
+});
+
+//Operator buttons
+const operatorButtons = document.querySelectorAll('.operator');
+operatorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        operator = button.textContent;
+    });
+});
+
+//Equals button
+document.querySelector('.equals').addEventListener('click', () => {
+    if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
+        const result = operate(operator, Number(firstNumber), Number(secondNumber));
+        firstNumber = result.toString();
+        secondNumber = '';
+        operator = '';
+        updateDisplay();
+    }
+});
+
+//Clear button
+document.querySelector('.clear').addEventListener('click', () => {
+    firstNumber = '';
+    secondNumber = '';
+    operator = '';
+    updateDisplay();
 });
