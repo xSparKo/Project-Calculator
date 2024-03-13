@@ -68,6 +68,12 @@ digitButtons.forEach(button => {
 const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
+        if (firstNumber !== '' && operator !== '' && secondNumber !== '') {
+            const result = operate(operator, Number(firstNumber), Number(secondNumber));
+            firstNumber = result.toString();
+            secondNumber = '';
+            updateDisplay();
+        }
         operator = button.textContent;
     });
 });
