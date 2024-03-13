@@ -16,10 +16,6 @@ function divide (a, b) {
 };
 
 //This function performs a mathematical operation on two numbers.
-//It takes three arguments: an operator in the form of a string('+', '-', '*', '/'), and two numbers.
-//Based on the operator provided, it calls the appropriate mathematical function (add, subtract, multiply, divide).
-//If the operator is '/', it checks if the second number is zero before performing the division to prevent division by zero.
-//If the operator is not one of the four expected operators, it returns an error message.
 function operate(operator, num1, num2) {
     let result;
     switch (operator) {
