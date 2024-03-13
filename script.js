@@ -21,21 +21,28 @@ function divide (a, b) {
 //If the operator is '/', it checks if the second number is zero before performing the division to prevent division by zero.
 //If the operator is not one of the four expected operators, it returns an error message.
 function operate(operator, num1, num2) {
+    let result;
     switch (operator) {
         case '+':
-            return add(num1, num2);
+            result = add(num1, num2);
+            break;
         case '-':
-            return subtract(num1, num2);
+            result = subtract(num1, num2);
+            break;
         case '*':
-            return multiply(num1, num2);
+            result = multiply(num1, num2);
+            break;
         case '/':
             if (num2 == 0) {
                 return "Error: Division by zero is not allowed. Please enter a valid number.";
+            } else {
+                result = divide(num1, num2);
             }
-            return divide(num1, num2);
+            break;
         default:
-            return "Error: Invalid operator. Please enter a valid operator.";
+            return 0;
     }
+    return Number(result.toFixed(2));
 }
 
 //Declare variables for calculator operations
@@ -51,14 +58,33 @@ function updateDisplay() {
     document.getElementById('display').textContent = secondNumber === '' ? firstNumber : secondNumber;
 }
 
-//Digit buttons
+// Decimal button
+const decimalButton = document.querySelector('.decimal');
+decimalButton.addEventListener('click', () => {
+    if (operator === '') {
+        if (!firstNumber.includes('.')) {
+            firstNumber += '.';
+        }
+    } else {
+        if (!secondNumber.includes('.')) {
+            secondNumber += '.';
+        }
+    }
+    updateDisplay();
+});
+
+// Digit buttons
 const digitButtons = document.querySelectorAll('.digit');
 digitButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (operator === '') {
-            firstNumber += button.textContent;
+            if (!firstNumber.includes('.') || firstNumber.split('.')[1].length < 2) {
+                firstNumber += button.textContent;
+            }
         } else {
-            secondNumber += button.textContent;
+            if (!secondNumber.includes('.') || secondNumber.split('.')[1].length < 2) {
+                secondNumber += button.textContent;
+            }
         }
         updateDisplay();
     });
