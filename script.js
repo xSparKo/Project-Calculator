@@ -127,6 +127,19 @@ document.querySelector('.clear').addEventListener('click', () => {
     updateDisplay();
 });
 
+//Backspace button
+const backspaceButton = document.querySelector('.backspace');
+backspaceButton.addEventListener('click', () => {
+    if (secondNumber !== '') {
+        secondNumber = secondNumber.slice(0, -1);
+    } else if (operator !== '') {
+        operator = '';
+    } else if (firstNumber !== '') {
+        firstNumber = firstNumber.slice(0, -1);
+    }
+    updateDisplay();
+});
+
 window.addEventListener('keydown', (event) => {
     const key = event.key;
 
@@ -166,6 +179,17 @@ window.addEventListener('keydown', (event) => {
         }
     }
 
+    //Check if key is Backspace
+    else if (key === 'Backspace') {
+        if (secondNumber !== '') {
+            secondNumber = secondNumber.slice(0, -1);
+        } else if (operator !== '') {
+            operator = '';
+        } else if (firstNumber !== '') {
+            firstNumber = firstNumber.slice(0, -1);
+        }
+    }
+        
     //Check if key is Enter (for equals)
     else if (key === 'Enter') {
         if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
