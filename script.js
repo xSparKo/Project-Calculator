@@ -50,13 +50,17 @@ let firstNumber = '';
 let secondNumber = '';
 let operator = '';
 
-//Declare variables for the calculator display
-let displayValue = '';
-
 //Update the display function
 function updateDisplay() {
-    document.getElementById('display').textContent = secondNumber === '' ? firstNumber : secondNumber;
+    let display = document.getElementById('display');
+    if (firstNumber === '' && secondNumber === '') {
+        display.textContent = '0';
+    } else {
+        display.textContent = secondNumber === '' ? firstNumber : secondNumber;
+    }
 }
+
+updateDisplay();
 
 // Decimal button
 const decimalButton = document.querySelector('.decimal');
@@ -120,5 +124,63 @@ document.querySelector('.clear').addEventListener('click', () => {
     firstNumber = '';
     secondNumber = '';
     operator = '';
+    updateDisplay();
+});
+
+window.addEventListener('keydown', (event) => {
+    const key = event.key;
+
+    //Check if key is a digit
+    if (!isNaN(key)) {
+        if (operator === '') {
+            if (!firstNumber.includes('.') || firstNumber.split('.')[1].length < 2) {
+                firstNumber += key;
+            }
+        } else {
+            if (!secondNumber.includes('.') || secondNumber.split('.')[1].length < 2) {
+                secondNumber += key;
+            }
+        }
+    }
+
+    //Check if key is an operator
+    else if (['+', '-', '*', '/'].includes(key)) {
+        if (firstNumber !== '' && operator !== '' && secondNumber !== '') {
+            const result = operate(operator, Number(firstNumber), Number(secondNumber));
+            firstNumber = result.toString();
+            secondNumber = '';
+        }
+        operator = key;
+    }
+
+    //Check if key is a decimal point
+    else if (key === '.') {
+        if (operator === '') {
+            if (!firstNumber.includes('.')) {
+                firstNumber += '.';
+            }
+        } else {
+            if (!secondNumber.includes('.')) {
+                secondNumber += '.';
+            }
+        }
+    }
+
+    //Check if key is Enter (for equals)
+    else if (key === 'Enter') {
+        if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
+            const result = operate(operator, Number(firstNumber), Number(secondNumber));
+            firstNumber = result.toString();
+            secondNumber = '';
+            operator = '';
+        }
+    }
+
+    //Check if key is Escape (for clear)
+    else if (key === 'Escape') {
+        firstNumber = '';
+        secondNumber = '';
+        operator = '';
+    }
     updateDisplay();
 });
