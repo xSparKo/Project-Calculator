@@ -19,4 +19,5 @@ My Calculator has a simple UI. Here's how it looks:
 </p>
 
 ---
-This project was possible thanks to [The Odin Project.](https://www.theodinproject.com/) As I finished project: Calculator on 2024-03-14, it marks my finish of the Foundation Course. 
+This project was possible thanks to [The Odin Project.](https://www.theodinproject.com/)  
+As I finished project: Calculator on 2024-03-14, it marks my finish of the Foundation Course. 
