@@ -204,5 +204,3 @@ window.addEventListener('keydown', (event) => {
     }
     updateDisplay();
 });
-
-Test gpg
